@@ -1,11 +1,17 @@
-name: Output on issues
-on: issues
+name: Output on failure
+
+on:
+  workflow_run:
+    workflows: ["Lint test and deploy on push"]
+    types:
+      - completed
 
 jobs:
   info:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - name: Output Event details
+      - name: Output Github context
         env:
-          EVENT_CONTEXT: ${{ toJSON(github.event) }}
-        run: echo "$EVENT_CONTEXT"
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
