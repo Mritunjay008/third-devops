@@ -31,7 +31,7 @@ jobs:
       - name: Lint testing
         run: npm run lint
   build:
-    needs: lint
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: code checkout

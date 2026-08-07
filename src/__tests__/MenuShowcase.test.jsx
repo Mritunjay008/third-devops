@@ -31,6 +31,6 @@ describe('MenuShowcase Component', () => {
     fireEvent.change(searchInput, { target: { value: 'prawns' } });
 
     expect(screen.getByText(/fiery prawns koliwada/i)).toBeInTheDocument();
-    expect(screen.queryByText(/butter chicken/i)).toBeInTheDocument();
+    expect(screen.queryByText(/butter chicken/i)).not.toBeInTheDocument();
   });
 });
