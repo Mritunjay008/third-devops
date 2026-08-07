@@ -6,13 +6,15 @@ jobs:
     steps:
       - name: code checkout
         uses: actions/checkout@v7
+        
+      - name: cachinn Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
       - name: install Dependencies
         run: npm install
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: 'npm'
       - name: test case
         run: npm run test
   lint:
@@ -21,6 +23,13 @@ jobs:
     steps:
       - name: code checkout
         uses: actions/checkout@v7
+
+      - name: cachinn Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
       - name: install Dependencies
         run: npm install
       - name: Setup Node.js
@@ -38,6 +47,13 @@ jobs:
     steps:
       - name: code checkout
         uses: actions/checkout@v7
+
+      - name: cachinn Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
       - name: install Dependencies
         run: npm install
       - name: Setup Node.js
