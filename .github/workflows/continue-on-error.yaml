@@ -45,11 +45,11 @@ jobs:
           cache: 'npm'
 
       - name: Test code
+        continue-on-error: true
         id: run-test
         run: npm run test
 
       - name: Upload test report
-        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: test-report
