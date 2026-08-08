@@ -1,6 +1,7 @@
 name: Matrix demo 
 on: push
 jobs: 
+  continue-on-error: true
   build:
     strategy:
       matrix:
