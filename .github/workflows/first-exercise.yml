@@ -89,6 +89,7 @@ jobs:
         run: ls
 
   report: 
+    needs: [lint, build, deploy, test]
     if: failure()
     runs-on: ubuntu-latest
     steps:
