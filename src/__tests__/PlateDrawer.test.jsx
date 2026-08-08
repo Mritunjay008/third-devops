@@ -49,6 +49,6 @@ describe('PlateDrawer Component', () => {
 
     const plusButtons = screen.getAllByRole('button');
     // find plus button or trash button
-    expect(plusButtons.length).not.toBeGreaterThan(0);
+    expect(plusButtons.length).toBeGreaterThan(0);
   });
 });
