@@ -41,7 +41,7 @@ jobs:
         run: npm run test
       - name: Upload test report
         if: failure() && steps.run-test.outcome == 'failure'
-        run: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
   build:
     needs: test
     runs-on: ubuntu-latest
