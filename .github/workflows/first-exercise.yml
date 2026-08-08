@@ -18,7 +18,6 @@ jobs:
       - name: lint code
         run: npm run lint
   test:
-    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: code checkout
@@ -38,8 +37,10 @@ jobs:
           node-version: 24
           cache: 'npm'
       - name: Test code
+        id: run-test
         run: npm run test
       - name: Upload test report
+        if: steps.run-test.outcome == 'failure'
         run: actions/upload-artifact@v4
   build:
     needs: test
@@ -68,7 +69,6 @@ jobs:
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
-        if: 
         with:
           name: dist-files
           path: dist
