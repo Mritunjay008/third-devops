@@ -8,12 +8,14 @@ jobs:
         uses: actions/checkout@v7
         
       - name: cache Dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
       - name: lint code
         run: npm run lint
@@ -24,18 +26,15 @@ jobs:
         uses: actions/checkout@v7
 
       - name: cache Dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: 'npm'
       - name: Test code
         id: run-test
         run: npm run test
@@ -55,18 +54,15 @@ jobs:
         uses: actions/checkout@v7
 
       - name: cache Dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: 'npm'
       - name: build
         run: npm run build
 
