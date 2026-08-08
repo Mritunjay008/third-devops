@@ -5,7 +5,7 @@ on:
       artifact-name: 
         description: The name of the deployable artifact files
         required: true
-        default: dist
+        default: dist-files
         type: string
 jobs:
   deploy:
