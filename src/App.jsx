@@ -60,19 +60,22 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0c0a09', color: '#f8fafc' }}>
-      {/* Top Operational Status Bar */}
-      <TopOperationalBar
-        onOpenMap={() => setIsMapOpen(true)}
-        onOpenTracker={() => setIsOrderTrackerOpen(true)}
-        hasActiveOrder={!!activeOrder}
-      />
+      {/* Sticky Header Wrapper */}
+      <div className="sticky-header-container">
+        {/* Top Operational Status Bar */}
+        <TopOperationalBar
+          onOpenMap={() => setIsMapOpen(true)}
+          onOpenTracker={() => setIsOrderTrackerOpen(true)}
+          hasActiveOrder={!!activeOrder}
+        />
 
-      {/* Header Navigation */}
-      <Navbar
-        onOpenReservation={() => setIsReservationOpen(true)}
-        onOpenPlate={() => setIsPlateOpen(true)}
-        plateCount={totalPlateCount}
-      />
+        {/* Header Navigation */}
+        <Navbar
+          onOpenReservation={() => setIsReservationOpen(true)}
+          onOpenPlate={() => setIsPlateOpen(true)}
+          plateCount={totalPlateCount}
+        />
+      </div>
 
       {/* Hero Banner */}
       <Hero onOpenReservation={() => setIsReservationOpen(true)} />
