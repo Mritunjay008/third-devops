@@ -1,8 +1,8 @@
 import React from 'react';
-import { Star, Quote, ThumbsUp } from 'lucide-react';
+import { Star, Quote, ThumbsUp, MessageSquarePlus } from 'lucide-react';
 
-export default function Reviews() {
-  const reviews = [
+export default function Reviews({ reviews = [], onOpenAddReview }) {
+  const defaultReviews = [
     {
       name: 'vikram thakur',
       role: 'food critic & meat connoisseur',
@@ -25,6 +25,8 @@ export default function Reviews() {
       comment: 'the smoky flavor from the live sigri charcoal is unmatched. crisp skin, ultra juicy meat, and the green mint chutney is divine.'
     }
   ];
+
+  const displayReviews = reviews.length > 0 ? [...reviews, ...defaultReviews] : defaultReviews;
 
   return (
     <section id="reviews" className="section-padding" style={{ background: '#0c0a09' }}>
@@ -56,9 +58,20 @@ export default function Reviews() {
             loved by non-veg food lovers
           </h2>
 
-          <p style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '1rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
             see what food reviewers and regular diners say about their experiences at <span style={{ color: '#ffffff', fontWeight: 700 }} className="lowercase-brand">thakur.08</span>.
           </p>
+
+          {onOpenAddReview && (
+            <button
+              onClick={onOpenAddReview}
+              className="btn-primary"
+              style={{ padding: '0.6rem 1.25rem', fontSize: '0.85rem' }}
+            >
+              <MessageSquarePlus style={{ width: '16px', height: '16px' }} />
+              <span>write a guest review</span>
+            </button>
+          )}
         </div>
 
         <div style={{
@@ -66,7 +79,7 @@ export default function Reviews() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: '2rem'
         }}>
-          {reviews.map((rev, index) => (
+          {displayReviews.map((rev, index) => (
             <div key={index} className="glass-card" style={{
               padding: '2rem',
               display: 'flex',
@@ -86,7 +99,7 @@ export default function Reviews() {
               <div>
                 {/* Rating stars */}
                 <div style={{ display: 'flex', gap: '4px', marginBottom: '1rem' }}>
-                  {[...Array(rev.rating)].map((_, i) => (
+                  {[...Array(rev.rating || 5)].map((_, i) => (
                     <Star key={i} style={{ width: '16px', height: '16px', fill: '#f59e0b', color: '#f59e0b' }} />
                   ))}
                 </div>
@@ -102,7 +115,7 @@ export default function Reviews() {
                   padding: '2px 8px',
                   borderRadius: '6px'
                 }}>
-                  favorite dish: {rev.dish}
+                  favorite dish: {rev.dish || rev.favoriteDish}
                 </div>
 
                 <p style={{
@@ -121,7 +134,7 @@ export default function Reviews() {
                   {rev.name}
                 </h4>
                 <p style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
-                  {rev.role}
+                  {rev.role || 'Verified Diner'}
                 </p>
               </div>
             </div>

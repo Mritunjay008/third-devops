@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Flame, Plus, Check, Star } from 'lucide-react';
+import { Search, Flame, Plus, Check, Star, SlidersHorizontal } from 'lucide-react';
 
 export const NON_VEG_MENU_ITEMS = [
   {
@@ -124,7 +124,7 @@ export const NON_VEG_MENU_ITEMS = [
   }
 ];
 
-export default function MenuShowcase({ plate = [], setPlate }) {
+export default function MenuShowcase({ plate = [], setPlate, onCustomizeItem }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -158,7 +158,7 @@ export default function MenuShowcase({ plate = [], setPlate }) {
   };
 
   const getItemQuantity = (id) => {
-    const found = plate.find(p => p.id === id);
+    const found = plate.find(p => p.id === id || p.originalId === id);
     return found ? found.quantity : 0;
   };
 
@@ -366,39 +366,62 @@ export default function MenuShowcase({ plate = [], setPlate }) {
                     {item.description}
                   </p>
 
-                  <button
-                    onClick={() => handleAddToPlate(item)}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      borderRadius: '12px',
-                      background: qty > 0 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
-                      border: qty > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(239, 68, 68, 0.3)',
-                      color: qty > 0 ? '#34d399' : '#fca5a5',
-                      fontFamily: 'var(--font-heading)',
-                      fontWeight: 700,
-                      fontSize: '0.9rem',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      transition: 'all 0.2s ease',
-                      textTransform: 'lowercase'
-                    }}
-                  >
-                    {qty > 0 ? (
-                      <>
-                        <Check style={{ width: '16px', height: '16px' }} />
-                        <span>added ({qty} on plate)</span>
-                      </>
-                    ) : (
-                      <>
-                        <Plus style={{ width: '16px', height: '16px' }} />
-                        <span>add to plate</span>
-                      </>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                      onClick={() => handleAddToPlate(item)}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem',
+                        borderRadius: '12px',
+                        background: qty > 0 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                        border: qty > 0 ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid rgba(239, 68, 68, 0.3)',
+                        color: qty > 0 ? '#34d399' : '#fca5a5',
+                        fontFamily: 'var(--font-heading)',
+                        fontWeight: 700,
+                        fontSize: '0.88rem',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        transition: 'all 0.2s ease',
+                        textTransform: 'lowercase'
+                      }}
+                    >
+                      {qty > 0 ? (
+                        <>
+                          <Check style={{ width: '16px', height: '16px' }} />
+                          <span>added ({qty})</span>
+                        </>
+                      ) : (
+                        <>
+                          <Plus style={{ width: '16px', height: '16px' }} />
+                          <span>add to plate</span>
+                        </>
+                      )}
+                    </button>
+
+                    {onCustomizeItem && (
+                      <button
+                        type="button"
+                        onClick={() => onCustomizeItem(item)}
+                        style={{
+                          padding: '0.75rem 0.85rem',
+                          borderRadius: '12px',
+                          background: 'rgba(245, 158, 11, 0.15)',
+                          border: '1px solid rgba(245, 158, 11, 0.3)',
+                          color: '#f59e0b',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                        title="Customize portion & spice level"
+                      >
+                        <SlidersHorizontal style={{ width: '16px', height: '16px' }} />
+                      </button>
                     )}
-                  </button>
+                  </div>
                 </div>
               </div>
             );
